@@ -73,7 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) {
         // JwtAuthenticationFilter ignores all below listed paths
-        web.ignoring().antMatchers(HttpMethod.POST, "/api/auth/login", "/api/reader/**");
+        web.ignoring().antMatchers(HttpMethod.POST, "/api/auth/login", "/api/index/**", "/api/reader/**");
         web.ignoring().antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "/favicon.ico", "/**/*.html",
                 "/**/*.css", "/**/*.js", "/**/*.pdf");
     }

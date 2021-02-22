@@ -1,25 +1,28 @@
 import React, { useState } from "react";
-import { useFormik } from "formik";
 import Header from "./Header";
+import { searchService } from "../services/search-service";
 import { bookService } from "../services/book-service";
 import { shoppingCartService } from "../services/shopping-cart-service";
-import { searchService } from "../services/search-service";
 import { toast } from "react-toastify";
+import { Button, Modal } from "react-bootstrap";
 import { AMOUNT } from "../constants";
 import Select from "react-select";
-import { Button, Modal } from "react-bootstrap";
-import * as Yup from "yup";
 
-const SearchBooks = () => {
+const AdvancedSearch = () => {
   const [books, setBooks] = useState([]);
+  const [counter, setCounter] = useState(2);
+  const [data, setData] = useState([
+    { id: 0, fieldName: "", value: "", phrase: false, operation: "" },
+    { id: 1, fieldName: "", value: "", phrase: false, operation: "" },
+  ]);
   const [searchDone, setSearchDone] = useState(false);
   const [bookToShow, setBookToShow] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
-  const downloadUrl = "https://localhost:8080/api/task/downloadFile?filePath=";
   const [selectedAmount, setSelectedAmount] = useState({
     value: 1,
     label: "1",
   });
+  const downloadUrl = "https://localhost:8080/api/task/downloadFile?filePath=";
 
   const addToCart = async (book, bookAmount) => {
     let currentUserId = localStorage.getItem("currentUserId");
@@ -68,111 +71,180 @@ const SearchBooks = () => {
     ));
   };
 
-  const formik = useFormik({
-    initialValues: {
-      field: "",
-      value: "",
-      phrase: false,
-    },
-    validationSchema: Yup.object().shape({
-      field: Yup.string().required("Choose which field you are searching"),
-      value: Yup.string().required("Search value is required"),
-    }),
-    onSubmit: async (values, { resetForm }) => {
-      try {
-        setSearchDone(false);
-        const response = await searchService.simpleSearch(values);
-        console.log(response);
-        resetForm();
-        setBooks(response);
-        if (response.length === 0) {
-          toast.info("No books found. Try again with different arguments.", {
-            hideProgressBar: true,
-          });
-        } else setSearchDone(true);
-      } catch (error) {
-        if (error.response) {
-          console.log("Error: " + JSON.stringify(error.response));
-        }
-        toast.error(error.response ? error.response.data : error.message, {
+  const handleChange = (e) => {
+    console.log(e.target);
+    const { id, value, name } = e.target;
+    console.log("ID " + id);
+    console.log("Ime polja " + name);
+    console.log("Vrednost " + value);
+
+    let newArray = [...data];
+    newArray[id][name] = value;
+    setData(newArray);
+  };
+
+  const handleChangeCheckbox = (e) => {
+    const { id, name } = e.target;
+    console.log(e.target.checked);
+
+    let newArray = [...data];
+    newArray[id][name] = e.target.checked;
+    setData(newArray);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.stopPropagation();
+    }
+
+    if (data.length < 2) {
+      toast.error("You need to make at least two queries", {
+        hideProgressBar: true,
+      });
+      return;
+    }
+
+    console.log(data);
+    try {
+      setSearchDone(false);
+      const response = await searchService.advancedSearch(data);
+      console.log(response);
+
+      if (response.length === 0) {
+        toast.info("No books found. Try again with different arguments.", {
           hideProgressBar: true,
         });
+      } else {
+        setBooks(response);
+        setSearchDone(true);
+        let newArray = [
+          { id: 0, fieldName: "", value: "", phrase: false, operation: "" },
+          { id: 1, fieldName: "", value: "", phrase: false, operation: "" },
+        ];
+
+        setData(newArray);
+        setCounter(2);
       }
-    },
-  });
+    } catch (error) {
+      if (error.response) {
+        console.log("Error: " + JSON.stringify(error.response));
+      }
+      toast.error(error.response ? error.response.data : error.message, {
+        hideProgressBar: true,
+      });
+    }
+  };
+
+  const createBooleanQuery = () => {
+    var formValue = {
+      id: counter,
+      fieldName: "",
+      value: "",
+      phrase: false,
+      operation: "",
+    };
+    data.push(formValue);
+    setCounter(counter + 1);
+  };
 
   return (
     <div>
       <Header />
-      <div className="pt-2">
-        <div
-          className="card mr-auto ml-auto mt-3 mb-2"
-          style={{
-            width: "35%",
-            backgroundColor: "#bdbbbb",
-          }}
-        >
-          <h2 className="card-title">Simple search</h2>
-          <form
-            onSubmit={formik.handleSubmit}
-            style={{ width: "90%", margin: "auto" }}
-          >
-            <div className="form-group">
-              <label htmlFor="field">Choose filed for search:</label>
-              <select
-                value={formik.values.field}
-                name="field"
-                className="form-control"
-                onChange={formik.handleChange}
-              >
-                <option value="" disabled hidden>
-                  Choose one
-                </option>
-                <option value="title"> Title </option>
-                <option value="writerName"> Writers Name </option>
-                <option value="writerLastName">Writers Last Name </option>
-                <option value="content"> Content </option>
-                <option value="genre"> Genre </option>
-              </select>
-              {formik.touched.field && formik.errors.field ? (
-                <p style={{ color: "red" }}>{formik.errors.field}</p>
-              ) : null}
-            </div>
+      <h1> Advanced Search </h1>
 
-            <div className="form-group">
-              <label htmlFor="value">Search</label>
-              <input
-                className="form-control"
-                id="value"
-                name="value"
-                type="text"
-                placeholder="Type here"
-                onChange={formik.handleChange}
-                value={formik.values.value}
-              />
-              {formik.touched.value && formik.errors.value ? (
-                <p style={{ color: "red" }}>{formik.errors.value}</p>
-              ) : null}
-            </div>
+      <Button
+        style={{ borderRadius: "2em" }}
+        variant="secondary"
+        onClick={createBooleanQuery}
+      >
+        Create New Boolean Query
+      </Button>
+      <form onSubmit={handleSubmit} style={{ width: "100%", margin: "auto" }}>
+        {data.map((element) => {
+          return (
+            <div
+              key={element.id}
+              className="card mr-auto ml-auto mt-3 mb-2 px-5"
+              style={{
+                width: "35%",
+                backgroundColor: "#bdbbbb",
+              }}
+            >
+              <div className="form-group">
+                <label htmlFor="field">Choose filed for search:</label>
+                <select
+                  id={element.id}
+                  value={element.fieldName}
+                  name="fieldName"
+                  className="form-control"
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="" disabled hidden>
+                    Choose one
+                  </option>
+                  <option value="title"> Title </option>
+                  <option value="writerName"> Writers Name </option>
+                  <option value="writerLastName"> Writers Last Name </option>
+                  <option value="content"> Content </option>
+                  <option value="genre"> Genre </option>
+                </select>
+              </div>
 
-            <div className="form-group">
-              <label htmlFor="phrase">Phrase query</label>
-              <input
-                className="form-control"
-                type="checkbox"
-                name="phrase"
-                id="phrase"
-                onChange={formik.handleChange}
-                value={formik.values.phrase}
-              />
-            </div>
+              <div className="form-group">
+                <label htmlFor="value">Search</label>
+                <input
+                  id={element.id}
+                  className="form-control"
+                  name="value"
+                  value={element.value}
+                  type="text"
+                  placeholder="Type here"
+                  onChange={handleChange}
+                  required
+                />
+              </div>
 
-            <button type="submit" className="btn btn-primary mb-3">
-              Search
-            </button>
-          </form>
-        </div>
-      </div>
+              <div className="form-group">
+                <label htmlFor="field">Choose operation:</label>
+                <select
+                  id={element.id}
+                  value={element.operation}
+                  name="operation"
+                  className="form-control"
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="" disabled hidden>
+                    Choose one
+                  </option>
+                  <option value="AND"> AND </option>
+                  <option value="OR"> OR </option>
+                  <option value="NOT"> NOT </option>
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="phrase">Phrase query</label>
+                <input
+                  id={element.id}
+                  className="form-control"
+                  type="checkbox"
+                  value={element.phrase}
+                  name="phrase"
+                  onChange={handleChangeCheckbox}
+                />
+              </div>
+            </div>
+          );
+        })}
+        <button type="submit" className="btn btn-primary mb-3">
+          Search
+        </button>
+      </form>
+
       {searchDone && <h2>Books</h2>}
       {searchDone && (
         <div className="pb-4">
@@ -321,4 +393,4 @@ const SearchBooks = () => {
   );
 };
 
-export default SearchBooks;
+export default AdvancedSearch;

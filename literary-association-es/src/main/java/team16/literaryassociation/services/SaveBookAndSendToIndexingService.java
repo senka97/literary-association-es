@@ -74,6 +74,7 @@ public class SaveBookAndSendToIndexingService implements JavaDelegate {
         book.setGenre(genre);
         book.setManuscript(manuscript);
         book.setPdf(manuscript.getPdf());
+        book.setFileName(manuscript.getFileName());
 
         String writerUsername = (String) delegateExecution.getVariable("writer");
         Writer writer = (Writer) userService.findByUsername(writerUsername);

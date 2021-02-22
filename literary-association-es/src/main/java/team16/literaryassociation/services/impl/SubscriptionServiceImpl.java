@@ -114,7 +114,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         return subscriptionsDTO;
     }
 
-    @Scheduled(initialDelay = 60000, fixedRate = 300000) //delay je 1 min, posle na svakih 5 minuta
+    //@Scheduled(initialDelay = 60000, fixedRate = 300000) //delay je 1 min, posle na svakih 5 minuta
     public void updateSubscriptionStatus(){
 
         System.out.println("Updating subscription status started...");

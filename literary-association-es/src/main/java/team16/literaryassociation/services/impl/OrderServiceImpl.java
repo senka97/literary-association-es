@@ -130,7 +130,7 @@ public class OrderServiceImpl implements OrderService {
         return purchasedBooks;
     }
 
-    @Scheduled(initialDelay = 45000, fixedRate = 300000) //na svakih 5 minuta
+    //@Scheduled(initialDelay = 45000, fixedRate = 300000) //na svakih 5 minuta
     public void updateOrdersStatus(){
 
         System.out.println("Updating orders status started...");
