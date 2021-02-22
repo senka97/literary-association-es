@@ -14,7 +14,7 @@ import java.nio.file.Paths;
 public class LiteraryAssociationApplication {
 
     public static void main(String[] args) {
-        createDir();
+        //createDir();
         SpringApplication.run(LiteraryAssociationApplication.class, args);
     }
 

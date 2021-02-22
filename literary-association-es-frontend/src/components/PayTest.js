@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
-import { writerService } from "../services/writer-service";
+import { searchService } from "../services/search-service";
 import { toast } from "react-toastify";
 
 const PayTest = () => {
@@ -10,7 +10,7 @@ const PayTest = () => {
   );
   const [role, setRole] = useState(localStorage.getItem("role"));
 
-  const membershipFeePayment = async () => {
+  /*const membershipFeePayment = async () => {
     console.log("Membership fee payment started...");
     try {
       const response = await writerService.membershipFeePayment();
@@ -25,7 +25,42 @@ const PayTest = () => {
         hideProgressBar: true,
       });
     }
+  };*/
+
+  const indexBooks = async () => {
+    console.log("Indexing started...");
+    try {
+      const response = await searchService.indexBooks();
+      toast.success(response, {
+        hideProgressBar: true,
+      });
+    } catch (error) {
+      if (error.response) {
+        console.log("Error: " + JSON.stringify(error.response));
+      }
+      toast.error(error.response ? error.response.data : error.message, {
+        hideProgressBar: true,
+      });
+    }
   };
+
+  const indexBetaReaders = async () => {
+    console.log("Indexing started...");
+    try {
+      const response = await searchService.indexBetaReaders();
+      toast.success(response, {
+        hideProgressBar: true,
+      });
+    } catch (error) {
+      if (error.response) {
+        console.log("Error: " + JSON.stringify(error.response));
+      }
+      toast.error(error.response ? error.response.data : error.message, {
+        hideProgressBar: true,
+      });
+    }
+  };
+
   return (
     <div>
       {/*{loggedIn && role === "ROLE_WRITER" && (
@@ -33,6 +68,13 @@ const PayTest = () => {
           Membership Fee Payment
         </Button>
       )}*/}
+      <Button variant="dark" onClick={indexBooks}>
+        Index Books
+      </Button>
+
+      <Button variant="dark" onClick={indexBetaReaders}>
+        Index Beta Readers
+      </Button>
     </div>
   );
 };

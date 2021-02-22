@@ -16,20 +16,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import team16.literaryassociation.dto.FormFieldsDTO;
 import team16.literaryassociation.dto.FormSubmissionDTO;
 import team16.literaryassociation.dto.TaskDTO;
-import team16.literaryassociation.dto.StartProcessDTO;
-import team16.literaryassociation.model.User;
-import team16.literaryassociation.security.auth.JwtBasedAuthentication;
 import team16.literaryassociation.services.interfaces.UploadDownloadService;
 
 import javax.validation.Valid;
-import javax.ws.rs.PathParam;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,12 +35,16 @@ public class TaskController {
 
     @Autowired
     private RuntimeService runtimeService;
+
     @Autowired
     private TaskService taskService;
+
     @Autowired
     private FormService formService;
+
     @Autowired
     private IdentityService identityService;
+
     @Autowired
     private UploadDownloadService uploadDownloadService;
 
@@ -199,7 +197,6 @@ public class TaskController {
 
     @GetMapping(value = "/downloadFile")
     public ResponseEntity downloadFile(@RequestParam("filePath") String filePath){
-
         try {
             Resource resource = this.uploadDownloadService.downloadFile(filePath);
             return ResponseEntity.ok().contentType(MediaType.APPLICATION_PDF)

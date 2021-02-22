@@ -16,27 +16,27 @@ insert into merchant (merchant_name, merchant_email, activated, error_url, faile
 values ('Laguna', 'laguna@gmail.com', true, 'https://localhost:3000/error', 'https://localhost:3000/failed', 'https://localhost:3000/success');
 
 -- sifra: reader123, username: reader123
-insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled, beta_reader, penalty_points)
-value ('Reader', 'reader123@gmail.com', '$2a$10$MgS2lefNxeyaDHxP/inYO.D0G5bkS8OX5RbAj7MJgghT16n6dQwIe', 'reader123', 'Senka', 'Reader', 'BDP', 'Srbija', true, true, true, 3);
+insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled, beta_reader, penalty_points, lat, lon)
+value ('Reader', 'reader123@gmail.com', '$2a$10$MgS2lefNxeyaDHxP/inYO.D0G5bkS8OX5RbAj7MJgghT16n6dQwIe', 'reader123', 'Senka', 'Reader', 'Novi Sad', 'Srbija', true, true, true, 3, 45.267136, 19.833549); --novi sad
 
 -- sifra boardmember
-insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled)
-value ('BoardMember', 'boardmember1@gmail.com', '$2a$10$U0MOxpLw1mEOI/sJbPQfxOmCrnSQlhSHhT5oWW.EVFvL5ahoEoXFu', 'boardMember1', 'Pera', 'BoardMember', 'NS', 'Srbija', true, true);
+insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled, lat, lon)
+value ('BoardMember', 'boardmember1@gmail.com', '$2a$10$U0MOxpLw1mEOI/sJbPQfxOmCrnSQlhSHhT5oWW.EVFvL5ahoEoXFu', 'boardMember1', 'Pera', 'BoardMember', 'NS', 'Srbija', true, true, 45.267136, 19.833549);
 
-insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled)
-value ('BoardMember', 'boardmember2@gmail.com', '$2a$10$U0MOxpLw1mEOI/sJbPQfxOmCrnSQlhSHhT5oWW.EVFvL5ahoEoXFu', 'boardMember2', 'Mika', 'BoardMember', 'NS', 'Srbija', true, true);
+insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled, lat, lon)
+value ('BoardMember', 'boardmember2@gmail.com', '$2a$10$U0MOxpLw1mEOI/sJbPQfxOmCrnSQlhSHhT5oWW.EVFvL5ahoEoXFu', 'boardMember2', 'Mika', 'BoardMember', 'NS', 'Srbija', true, true, 45.267136, 19.833549);
 
 -- sifra: reader123, username: admin123
-insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled)
-value ('Admin', 'admin123@gmail.com', '$2a$10$MgS2lefNxeyaDHxP/inYO.D0G5bkS8OX5RbAj7MJgghT16n6dQwIe', 'admin123', 'Senka', 'Admin', 'NS', 'Srbija', true, true);
+insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled, lat, lon)
+value ('Admin', 'admin123@gmail.com', '$2a$10$MgS2lefNxeyaDHxP/inYO.D0G5bkS8OX5RbAj7MJgghT16n6dQwIe', 'admin123', 'Senka', 'Admin', 'NS', 'Srbija', true, true, 45.267136, 19.833549);
 
 -- sifra: reader123, username: editor123
-insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled)
-value ('Editor', 'editor123@maildrop.cc', '$2a$10$MgS2lefNxeyaDHxP/inYO.D0G5bkS8OX5RbAj7MJgghT16n6dQwIe', 'editor123', 'Senka', 'Editor', 'NS', 'Srbija', true, true);
+insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled, lat, lon)
+value ('Editor', 'editor123@maildrop.cc', '$2a$10$MgS2lefNxeyaDHxP/inYO.D0G5bkS8OX5RbAj7MJgghT16n6dQwIe', 'editor123', 'Senka', 'Editor', 'NS', 'Srbija', true, true, 45.267136, 19.833549);
 
 -- sifra: reader123, username: writer123
-insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled)
-    value ('Writer', 'writer123@maildrop.cc', '$2a$10$MgS2lefNxeyaDHxP/inYO.D0G5bkS8OX5RbAj7MJgghT16n6dQwIe', 'writer123', 'Senka', 'Writer', 'NS', 'Srbija', true, true);
+insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled, lat, lon)
+    value ('Writer', 'writer123@maildrop.cc', '$2a$10$MgS2lefNxeyaDHxP/inYO.D0G5bkS8OX5RbAj7MJgghT16n6dQwIe', 'writer123', 'Senka', 'Writer', 'NS', 'Srbija', true, true, 45.267136, 19.833549);
 
 insert into user_roles (user_id, role_id) values (1,1); -- reader
 insert into user_roles (user_id, role_id) values (2,3); -- board member
@@ -60,12 +60,12 @@ insert into beta_reader_genre (beta_reader_id,genre_id) value (1, 1);
 insert into beta_reader_genre (beta_reader_id,genre_id) value (1, 2);
 
 -- sifra: reader2, username: reader1234
-insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled, beta_reader, penalty_points)
-value ('Reader', 'reader2@gmail.com', '$2a$10$MgS2lefNxeyaDHxP/inYO.D0G5bkS8OX5RbAj7MJgghT16n6dQwIe', 'reader2', 'Bojana', 'Kliska', 'NS', 'Srbija', true, true, true, 4);
+insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled, beta_reader, penalty_points, lat, lon)
+value ('Reader', 'reader2@gmail.com', '$2a$10$MgS2lefNxeyaDHxP/inYO.D0G5bkS8OX5RbAj7MJgghT16n6dQwIe', 'reader2', 'Bojana', 'Kliska', 'Berlin', 'Nemacka', true, true, true, 4, 52.521992, 13.413244);
 
 -- sifra: reader3, username: reader12345
-insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled, beta_reader, penalty_points)
-value ('Reader', 'reader3@gmail.com', '$2a$10$MgS2lefNxeyaDHxP/inYO.D0G5bkS8OX5RbAj7MJgghT16n6dQwIe', 'reader3', 'Marina', 'Bartulov', 'BG', 'Srbija', true, true, true, 0);
+insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled, beta_reader, penalty_points, lat, lon)
+value ('Reader', 'reader3@gmail.com', '$2a$10$MgS2lefNxeyaDHxP/inYO.D0G5bkS8OX5RbAj7MJgghT16n6dQwIe', 'reader3', 'Marina', 'Bartulov', 'Berlin', 'Nemacka', true, true, true, 0, 52.521992, 13.413244);
 
 insert into beta_reader_genre (beta_reader_id,genre_id) value (7, 3);
 insert into beta_reader_genre (beta_reader_id,genre_id) value (8, 3);
@@ -73,57 +73,57 @@ insert into beta_reader_genre (beta_reader_id,genre_id) value (8, 3);
 insert into user_roles (user_id, role_id) values (7,1);
 insert into user_roles (user_id, role_id) values (8,1);
 
-insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled)
-value ('Lecturer', 'lecturer1@gmail.com', '$2a$10$MgS2lefNxeyaDHxP/inYO.D0G5bkS8OX5RbAj7MJgghT16n6dQwIe', 'lecturer1', 'Nikola', 'Lecturer', 'NS', 'Srbija', true, true);
+insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled, lat, lon)
+value ('Lecturer', 'lecturer1@gmail.com', '$2a$10$MgS2lefNxeyaDHxP/inYO.D0G5bkS8OX5RbAj7MJgghT16n6dQwIe', 'lecturer1', 'Nikola', 'Lecturer', 'NS', 'Srbija', true, true, 45.267136, 19.833549);
 
-insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled)
-value ('Lecturer', 'lecturer2@gmail.com', '$2a$10$MgS2lefNxeyaDHxP/inYO.D0G5bkS8OX5RbAj7MJgghT16n6dQwIe', 'lecturer2', 'Milan', 'Lecturer', 'NS', 'Srbija', true, true);
+insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled, lat, lon)
+value ('Lecturer', 'lecturer2@gmail.com', '$2a$10$MgS2lefNxeyaDHxP/inYO.D0G5bkS8OX5RbAj7MJgghT16n6dQwIe', 'lecturer2', 'Milan', 'Lecturer', 'NS', 'Srbija', true, true, 45.267136, 19.833549);
 
-insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled)
-value ('Lecturer', 'lecturer3@gmail.com', '$2a$10$MgS2lefNxeyaDHxP/inYO.D0G5bkS8OX5RbAj7MJgghT16n6dQwIe', 'lecturer3', 'Jovan', 'Lecturer', 'NS', 'Srbija', true, true);
+insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled, lat, lon)
+value ('Lecturer', 'lecturer3@gmail.com', '$2a$10$MgS2lefNxeyaDHxP/inYO.D0G5bkS8OX5RbAj7MJgghT16n6dQwIe', 'lecturer3', 'Jovan', 'Lecturer', 'NS', 'Srbija', true, true, 45.267136, 19.833549);
 
 insert into user_roles (user_id, role_id) values (9,6);
 insert into user_roles (user_id, role_id) values (10,6);
 insert into user_roles (user_id, role_id) values (11,6);
 
-insert into book (plagiarism, isbn, num_of_pages, open_access, pdf, price, publishers_address, synopsis, title, year, editor_id, genre_id, lecturer_id, publisher_id, writer_id)
-values (false, '2222', 300, true, 'plagiarism-files/KontrolnaTacka.pdf', 13.0, 'Novi Sad, Jevrejska 10', 'dddddddddddddd', 'Kul knjiga 1', '2020', 5, 1, 11, 1, 6);
+insert into book (file_name, plagiarism, isbn, num_of_pages, open_access, pdf, price, publishers_address, synopsis, title, year, editor_id, genre_id, lecturer_id, publisher_id, writer_id)
+values ('Bitcoin.pdf' ,false, '2222', 300, true, 'uploaded-files/Bitcoin.pdf', 13.0, 'Novi Sad, Jevrejska 10', 'Bitcoin', 'Bitcoin', '2020', 5, 1, 11, 1, 6);
 
 -- sifra: reader123, username: writer2 id: 12
-insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled)
-values ('Writer', 'writer2@maildrop.cc', '$2a$10$MgS2lefNxeyaDHxP/inYO.D0G5bkS8OX5RbAj7MJgghT16n6dQwIe', 'writer2', 'Filip', 'Writer', 'NS', 'Srbija', true, true);
+insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled, lat, lon)
+values ('Writer', 'writer2@maildrop.cc', '$2a$10$MgS2lefNxeyaDHxP/inYO.D0G5bkS8OX5RbAj7MJgghT16n6dQwIe', 'writer2', 'Filip', 'Writer', 'Berlin', 'Nemacka', true, true, 52.521992, 13.413244); -- Berlin
 
-insert into book (plagiarism, isbn, num_of_pages, open_access, pdf, price, publishers_address, synopsis, title, year, editor_id, genre_id, lecturer_id, publisher_id, writer_id)
-values (false, '2223', 300, true, 'plagiarism-files/KontrolnaTacka2.pdf', 12.0, 'Novi Sad, Jevrejska 10', 'hhhh', 'Kul knjiga 2', '2020', 5, 2, 10, 1, 12);
+insert into book (file_name, plagiarism, isbn, num_of_pages, open_access, pdf, price, publishers_address, synopsis, title, year, editor_id, genre_id, lecturer_id, publisher_id, writer_id)
+values ('Bitcoin prešao 44.pdf', false, '2223', 300, true, 'uploaded-files/Bitcoin prešao 44.pdf', 12.0, 'Novi Sad, Jevrejska 10', 'Bitcoin', 'Bitcoin prešao 44.000$ nakon što je Tesla kupila kriptovalutu za 1,5 milijardi $', '2020', 5, 2, 10, 1, 12);
 
-insert into book (plagiarism, isbn, num_of_pages, open_access, pdf, price, publishers_address, synopsis, title, year, editor_id, genre_id, lecturer_id, publisher_id, writer_id)
-values (false, '2224', 300, true, 'plagiarism-files/KontrolnaTacka2.pdf', 15.0, 'Novi Sad, Jevrejska 10', 'lll', 'Kul knjiga 3', '2020', 5, 1, 9, 1, 6);
+insert into book (file_name, plagiarism, isbn, num_of_pages, open_access, pdf, price, publishers_address, synopsis, title, year, editor_id, genre_id, lecturer_id, publisher_id, writer_id)
+values ('Frilenseri i mediji.pdf', false, '2224', 300, true, 'uploaded-files/Frilenseri i mediji.pdf', 15.0, 'Novi Sad, Jevrejska 10', 'Frilenseri i mediji', 'Frilenseri i mediji — ponekad površno i ostrašćeno, uglavnom neutralno', '2020', 5, 1, 9, 1, 6);
 
 -- sifra: reader123, username: editor1
-insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled)
-value ('Editor', 'prvieditor@maildrop.cc', '$2a$10$MgS2lefNxeyaDHxP/inYO.D0G5bkS8OX5RbAj7MJgghT16n6dQwIe', 'editor1', 'Prvi', 'Prvic', 'NS', 'Srbija', true, true);
+insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled, lat, lon)
+value ('Editor', 'prvieditor@maildrop.cc', '$2a$10$MgS2lefNxeyaDHxP/inYO.D0G5bkS8OX5RbAj7MJgghT16n6dQwIe', 'editor1', 'Prvi', 'Prvic', 'NS', 'Srbija', true, true, 45.267136, 19.833549);
 
 -- sifra: reader123, username: editor2
-insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled)
-value ('Editor', 'drugieditor@maildrop.cc', '$2a$10$MgS2lefNxeyaDHxP/inYO.D0G5bkS8OX5RbAj7MJgghT16n6dQwIe', 'editor2', 'Drugi', 'Drugic', 'NS', 'Srbija', true, true);
+insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled, lat, lon)
+value ('Editor', 'drugieditor@maildrop.cc', '$2a$10$MgS2lefNxeyaDHxP/inYO.D0G5bkS8OX5RbAj7MJgghT16n6dQwIe', 'editor2', 'Drugi', 'Drugic', 'NS', 'Srbija', true, true, 45.267136, 19.833549);
 
 insert into user_roles (user_id, role_id) values (12,2);
 insert into user_roles (user_id, role_id) values (13,5);
 insert into user_roles (user_id, role_id) values (14,5);
 
 -- sifra: reader123, username: editor3
-insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled)
-value ('Editor', 'trecieditor@maildrop.cc', '$2a$10$MgS2lefNxeyaDHxP/inYO.D0G5bkS8OX5RbAj7MJgghT16n6dQwIe', 'editor3', 'Treci', 'Trecic', 'NS', 'Srbija', true, true);
+insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled, lat, lon)
+value ('Editor', 'trecieditor@maildrop.cc', '$2a$10$MgS2lefNxeyaDHxP/inYO.D0G5bkS8OX5RbAj7MJgghT16n6dQwIe', 'editor3', 'Treci', 'Trecic', 'NS', 'Srbija', true, true, 45.267136, 19.833549);
 
 -- sifra: reader123, username: editor4
-insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled)
-value ('Editor', 'cetvrtieditor@maildrop.cc', '$2a$10$MgS2lefNxeyaDHxP/inYO.D0G5bkS8OX5RbAj7MJgghT16n6dQwIe', 'editor4', 'Cetvrti', 'Cetvrtic', 'NS', 'Srbija', true, true);
+insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled, lat, lon)
+value ('Editor', 'cetvrtieditor@maildrop.cc', '$2a$10$MgS2lefNxeyaDHxP/inYO.D0G5bkS8OX5RbAj7MJgghT16n6dQwIe', 'editor4', 'Cetvrti', 'Cetvrtic', 'NS', 'Srbija', true, true, 45.267136, 19.833549);
 
 insert into user_roles (user_id, role_id) values (15,5);
 insert into user_roles (user_id, role_id) values (16,5);
 
-insert into book (plagiarism, isbn, num_of_pages, open_access, pdf, price, publishers_address, synopsis, title, year, editor_id, genre_id, lecturer_id, publisher_id, writer_id)
-value (false, '1234567891234', 100, true, '/uploaded-files/knjiga1.pdf',10.59, 'Bulevar oslobodjenja 34', 'Sada dopunjena novim istraživanjima, ova sjajna knjiga promenila je milione života svojim uvidom u razvojni mentalni sklop. Nakon decenija istraživanja svetski poznat univerzitetski psiholog dr Kerol S. Dvek otkrila je jednostavnu, ali revolucionarnu ideju: moć mentalnog sklopa. Pokazuje nam kako način na koji razmišljamo o svojim talentima i sposobnostima može dramatično uticati na uspeh u školi, sportu, umetnosti, kao i na gotovo svako područje ljudskog života.','Mentalni sklop','2015',5,7,9,1,6);
+insert into book (file_name, plagiarism, isbn, num_of_pages, open_access, pdf, price, publishers_address, synopsis, title, year, editor_id, genre_id, lecturer_id, publisher_id, writer_id)
+value ('korona virus.pdf', false, '1234567891234', 100, true, 'uploaded-files/korona virus.pdf',10.59, 'Bulevar oslobodjenja 34', 'Korona virus','Корона вирус','2015',5,7,9,1,6);
 
-insert into book (plagiarism, isbn, num_of_pages, open_access, pdf, price, publishers_address, synopsis, title, year, editor_id, genre_id, lecturer_id, publisher_id, writer_id)
-value (false, '1234567333333', 150, false, '/uploaded-files/knjiga2.pdf',17.50, 'Bulevar Mihajla Pupina 23', 'Triler koji istražuje dubine ljudske psihe i njene tamne strane koje ne želimo da priznamo. Nemačka, 1994. U šumi koja guta svojim moćnim jelama varošice regije Baden-Virtemberg, na Badnje veče, inspektor Jirgen Fišer biće svedok scene koju neće zaboraviti do kraja života. Sneg je iznenada prestao da pada, i u dubokoj tišini koja ga je okruživala, pred njegovim očima pojavio se proplanak, savršen krug među jelama, a u njegovom centru crvena barica.','Zora u crnoj sumi','2015',5,1,9,2,6);
+insert into book (file_name, plagiarism, isbn, num_of_pages, open_access, pdf, price, publishers_address, synopsis, title, year, editor_id, genre_id, lecturer_id, publisher_id, writer_id)
+value ('Loš dizajn korisničkog interfejsa koštao banku 500 miliona.pdf', false, '1234567333333', 150, false, 'uploaded-files/Loš dizajn korisničkog interfejsa koštao banku 500 miliona.pdf',17.50, 'Bulevar Mihajla Pupina 23', 'Korisnički interfejs ','Loš dizajn korisničkog interfejsa koštao banku 500 miliona $','2015',5,1,9,2,6);

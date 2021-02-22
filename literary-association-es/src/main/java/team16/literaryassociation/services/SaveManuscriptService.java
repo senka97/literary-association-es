@@ -36,6 +36,7 @@ public class SaveManuscriptService implements JavaDelegate {
         }
         Manuscript m = new Manuscript();
         m.setPdf(uploadFolder + execution.getProcessInstanceId() + "/" +pdfManuscript);
+        m.setFileName(pdfManuscript);
         m.setBookRequest(br);
         m.setOriginal(false);
         m.setAccepted(false);

@@ -66,6 +66,11 @@ const Header = () => {
   const goToSearchBooks = () => {
     history.push("/searchBooks");
   };
+
+  const goToAdvancedSearch = () => {
+    history.push("/advanced-search");
+  };
+
   const goToShoppingCart = () => {
     history.push("/shoppingCart");
   };
@@ -174,6 +179,9 @@ const Header = () => {
           )}
           <Button className="ml-2" variant="link" onClick={goToSearchBooks}>
             Search books
+          </Button>
+          <Button className="ml-2" variant="link" onClick={goToAdvancedSearch}>
+            Advanced Search
           </Button>
           {loggedIn && role === "ROLE_READER" && (
             <Button className="ml-2" variant="link" onClick={goToShoppingCart}>

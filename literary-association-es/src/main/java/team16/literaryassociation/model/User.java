@@ -24,23 +24,36 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
+
     @Column(nullable=false)
     private String firstName;
+
     @Column(nullable=false)
     private String lastName;
+
     @Column(nullable=false)
     private String city;
+
     @Column(nullable=false)
     private String country;
+
     @Column(nullable=false, unique = true)
     private String email;
+
     @Column(nullable=false, unique = true)
     private String username;
+
     @Column(nullable=false)
     private String password;
+
     @Column(nullable=false)
     private boolean verified;
+
     private boolean enabled;
+
+    private float lat;
+
+    private float lon;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",

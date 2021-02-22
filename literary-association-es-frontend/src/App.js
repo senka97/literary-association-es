@@ -9,7 +9,7 @@ import SuccessfulTransaction from "./components/SuccessfulTransaction";
 import PayTest from "./components/PayTest";
 import Login from "./components/Login";
 import BoardMemberPanel from "./components/BoardMemberPanel";
-
+import AdvancedSearch from "./components/AdvancedSearch";
 import { ToastContainer } from "react-toastify";
 import RegistrationMerchant from "./components/RegistrationMerchant";
 import ShoppingCart from "./components/ShoppingCart";
@@ -83,6 +83,9 @@ function App() {
             </Route>
             <Route exact path="/searchBooks">
               <SearchBooks />
+            </Route>
+            <Route exact path="/advanced-search">
+              <AdvancedSearch />
             </Route>
             <Route exact path="/orders">
               <Orders />

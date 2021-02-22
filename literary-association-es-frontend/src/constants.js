@@ -25,6 +25,10 @@ export const ROUTES = {
   MEMBERSHIP_FEE_PAYMENT: "/writer/membership-fee-payment",
   START_PLAGIARSM_DETECTION: "/book/start-process-plagiarism-detection",
   SUBSCRIPTIONS: "/subscriptions",
+  INDEX_BOOKS: "/index/books",
+  INDEX_BETA_READERS: "/index/beta-readers",
+  SIMPLE_SEARCH: "/search/simple",
+  ADVANCED_SEARCH: "/search/advanced",
 };
 
 export const AMOUNT = [
