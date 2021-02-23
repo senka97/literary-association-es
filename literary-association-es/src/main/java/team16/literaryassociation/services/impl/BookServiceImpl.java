@@ -62,4 +62,9 @@ public class BookServiceImpl implements BookService {
     public Book findById(Long id) {
         return this.bookRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public Book findByFileName(String fileName) {
+        return this.bookRepository.findByFileName(fileName);
+    }
 }

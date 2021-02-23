@@ -21,6 +21,8 @@ import Orders from "./components/Orders";
 import Subscription from "./components/Subscription";
 import Subscriptions from "./components/Subscriptions";
 import PurchasedBooks from "./components/PurchasedBooks";
+import UploadFileAndCheckPlagiarism from "./components/UploadFileAndCheckPlagiarism";
+import BetaReadersGeoSearch from "./components/BetaReadersGeoSearch";
 
 function App() {
   return (
@@ -98,6 +100,12 @@ function App() {
             </Route>
             <Route exact path="/purchasedBooks">
               <PurchasedBooks />
+            </Route>
+            <Route exact path="/book-plagiarism">
+              <UploadFileAndCheckPlagiarism />
+            </Route>
+            <Route exact path="/search-beta-readers">
+              <BetaReadersGeoSearch />
             </Route>
           </Switch>
         </div>

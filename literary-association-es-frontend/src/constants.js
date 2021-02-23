@@ -29,6 +29,8 @@ export const ROUTES = {
   INDEX_BETA_READERS: "/index/beta-readers",
   SIMPLE_SEARCH: "/search/simple",
   ADVANCED_SEARCH: "/search/advanced",
+  UPLOAD_FILE_PLAGIARISM: "/book/upload",
+  GEO_LOCATION_SEARCH: "/search/geo-location",
 };
 
 export const AMOUNT = [

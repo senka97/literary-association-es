@@ -13,6 +13,17 @@ class UploadService extends HttpService {
     const response = await this.client.post(ROUTES.TASK_UPLOAD, formdata);
     return response.data;
   };
+
+  uploadFileForPlagiarism = async (file) => {
+    const formdata = new FormData();
+    formdata.append("file", file);
+
+    const response = await this.client.post(
+      ROUTES.UPLOAD_FILE_PLAGIARISM,
+      formdata
+    );
+    return response.data;
+  };
 }
 
 export const uploadService = new UploadService();

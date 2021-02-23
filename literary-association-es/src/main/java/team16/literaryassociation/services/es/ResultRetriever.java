@@ -10,8 +10,10 @@ import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.stereotype.Service;
+import team16.literaryassociation.dto.BetaReaderDTO;
 import team16.literaryassociation.dto.HighlightDTO;
 import team16.literaryassociation.dto.SearchResultDTO;
+import team16.literaryassociation.model.es.BetaReaderES;
 import team16.literaryassociation.model.es.BookES;
 
 import java.util.ArrayList;
@@ -92,6 +94,35 @@ public class ResultRetriever {
                     result.getHighlights().add(highlightDTO);
                 }
             }
+            results.add(result);
+        }
+        return results;
+    }
+
+    public List<BetaReaderDTO> getResultsBetaReaders(QueryBuilder query) {
+        if (query == null) {
+            return null;
+        }
+        System.out.println("Usao u resault retriever");
+        List<BetaReaderDTO> results = new ArrayList<>();
+
+        NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
+                .withQuery(query)
+                .build();
+
+        System.out.println("Napravio query");
+
+        SearchHits<BetaReaderES> searchHits = template.search(searchQuery,
+                BetaReaderES.class,
+                IndexCoordinates.of("beta-reader"));
+
+        System.out.println("ESRTemplejt pretrazio");
+        System.out.println("----------------------------RESULTS----------------------------");
+        System.out.println(searchHits.getSearchHits());
+
+        for(SearchHit<BetaReaderES> hit : searchHits.getSearchHits())
+        {
+            BetaReaderDTO result = new BetaReaderDTO(hit.getContent());
             results.add(result);
         }
         return results;

@@ -21,6 +21,13 @@ class SearchService extends HttpService {
     const response = await this.client.post(ROUTES.ADVANCED_SEARCH, payload);
     return response.data;
   };
+
+  geoLocationSearch = async (id, genre) => {
+    const response = await this.client.get(
+      ROUTES.GEO_LOCATION_SEARCH + "/" + id + "/" + genre
+    );
+    return response.data;
+  };
 }
 
 export const searchService = new SearchService();

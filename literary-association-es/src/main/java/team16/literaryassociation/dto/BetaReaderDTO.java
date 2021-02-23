@@ -3,6 +3,7 @@ package team16.literaryassociation.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import team16.literaryassociation.model.es.BetaReaderES;
 
 import java.io.Serializable;
 
@@ -28,4 +29,10 @@ public class BetaReaderDTO implements Serializable {
     private boolean betaReader;
 
     private int penaltyPoints;
+
+    public BetaReaderDTO(BetaReaderES betaReaderES){
+        this.id = betaReaderES.getBetaReaderId();
+        this.firstName = betaReaderES.getName();
+        this.lastName = betaReaderES.getLastName();
+    }
 }

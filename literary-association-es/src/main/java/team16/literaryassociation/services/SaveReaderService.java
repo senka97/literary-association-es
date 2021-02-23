@@ -1,22 +1,22 @@
 package team16.literaryassociation.services;
 
 import org.camunda.bpm.engine.IdentityService;
-import org.camunda.bpm.engine.ProcessEngineException;
 import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import team16.literaryassociation.dto.FormSubmissionDTO;
+import team16.literaryassociation.dto.GeoLocationDTO;
 import team16.literaryassociation.model.Genre;
 import team16.literaryassociation.model.Reader;
 import team16.literaryassociation.model.Role;
+import team16.literaryassociation.services.es.Indexer;
 import team16.literaryassociation.services.interfaces.GenreService;
 import team16.literaryassociation.services.interfaces.ReaderService;
 import team16.literaryassociation.services.interfaces.RoleService;
+import team16.literaryassociation.services.interfaces.UserService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -27,14 +27,24 @@ public class SaveReaderService implements JavaDelegate {
 
     @Autowired
     private IdentityService identityService;
+
     @Autowired
     private ReaderService readerService;
+
     @Autowired
     private GenreService genreService;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
+
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private Indexer indexer;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
@@ -57,6 +67,10 @@ public class SaveReaderService implements JavaDelegate {
         newReader.setCountry((String) map.get("country"));
         newReader.setBetaReader((boolean) map.get("betaReader"));
 
+        GeoLocationDTO geoLocationDTO = userService.returnGeoLocation((String) map.get("city"));
+        newReader.setLat(geoLocationDTO.getLat());
+        newReader.setLon(geoLocationDTO.getLon());
+
         List<String> genres = (List<String>) map.get("genres");
         for (String genre : genres) {
             Genre g = this.genreService.findByName(genre);
@@ -73,6 +87,12 @@ public class SaveReaderService implements JavaDelegate {
 
         if(newReader != null){
             execution.setVariable("readerId", newReader.getId());
+
+            //SLANJE NA INDEKSIRANJE
+            if(newReader.isBetaReader()) {
+                indexer.indexBetaReader(newReader);
+            }
+
             try {
                 org.camunda.bpm.engine.identity.User cmdUser = identityService.newUser(newReader.getUsername());
                 cmdUser.setEmail(newReader.getEmail());

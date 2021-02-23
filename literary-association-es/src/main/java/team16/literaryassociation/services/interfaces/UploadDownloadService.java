@@ -9,4 +9,5 @@ public interface UploadDownloadService {
 
     String uploadFile(MultipartFile file, String processId, int counter);
     Resource downloadFile(String filePath) throws MalformedURLException;
+    String uploadFilePlagiarism(MultipartFile file);
 }

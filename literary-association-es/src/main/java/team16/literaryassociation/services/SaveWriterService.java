@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import team16.literaryassociation.dto.FormSubmissionDTO;
+import team16.literaryassociation.dto.GeoLocationDTO;
 import team16.literaryassociation.model.Genre;
 import team16.literaryassociation.model.Role;
 import team16.literaryassociation.model.Writer;
 import team16.literaryassociation.services.interfaces.GenreService;
 import team16.literaryassociation.services.interfaces.RoleService;
+import team16.literaryassociation.services.interfaces.UserService;
 import team16.literaryassociation.services.interfaces.WriterService;
 
 import java.util.HashMap;
@@ -37,6 +39,9 @@ public class SaveWriterService implements JavaDelegate {
     @Autowired
     private RoleService roleService;
 
+    @Autowired
+    private UserService userService;
+
     @Override
     public void execute(DelegateExecution execution) throws Exception {
         System.out.println("Uslo u SaveWriterService");
@@ -56,6 +61,10 @@ public class SaveWriterService implements JavaDelegate {
         newWriter.setUsername((String) map.get("username"));
         newWriter.setCity((String) map.get("city"));
         newWriter.setCountry((String) map.get("country"));
+
+        GeoLocationDTO geoLocationDTO = userService.returnGeoLocation((String) map.get("city"));
+        newWriter.setLat(geoLocationDTO.getLat());
+        newWriter.setLon(geoLocationDTO.getLon());
 
         List<String> genres = (List<String>) map.get("genres");
         for (String genre : genres) {

@@ -58,17 +58,35 @@ insert into reader_genre (reader_id,genre_id) value (1, 2);
 
 insert into beta_reader_genre (beta_reader_id,genre_id) value (1, 1);
 insert into beta_reader_genre (beta_reader_id,genre_id) value (1, 2);
+insert into beta_reader_genre (beta_reader_id,genre_id) value (1, 3);
+insert into beta_reader_genre (beta_reader_id,genre_id) value (1, 4);
+insert into beta_reader_genre (beta_reader_id,genre_id) value (1, 5);
+insert into beta_reader_genre (beta_reader_id,genre_id) value (1, 6);
+insert into beta_reader_genre (beta_reader_id,genre_id) value (1, 7);
 
--- sifra: reader2, username: reader1234
+-- sifra: reader123, username: reader2
 insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled, beta_reader, penalty_points, lat, lon)
 value ('Reader', 'reader2@gmail.com', '$2a$10$MgS2lefNxeyaDHxP/inYO.D0G5bkS8OX5RbAj7MJgghT16n6dQwIe', 'reader2', 'Bojana', 'Kliska', 'Berlin', 'Nemacka', true, true, true, 4, 52.521992, 13.413244);
 
--- sifra: reader3, username: reader12345
+-- sifra: reader123, username: reader3
 insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled, beta_reader, penalty_points, lat, lon)
-value ('Reader', 'reader3@gmail.com', '$2a$10$MgS2lefNxeyaDHxP/inYO.D0G5bkS8OX5RbAj7MJgghT16n6dQwIe', 'reader3', 'Marina', 'Bartulov', 'Berlin', 'Nemacka', true, true, true, 0, 52.521992, 13.413244);
+value ('Reader', 'reader3@gmail.com', '$2a$10$MgS2lefNxeyaDHxP/inYO.D0G5bkS8OX5RbAj7MJgghT16n6dQwIe', 'reader3', 'Marina', 'Bartulov', 'Beograd', 'Srbija', true, true, true,0, 44.787197, 20.457273);
 
+insert into beta_reader_genre (beta_reader_id,genre_id) value (7, 1);
+insert into beta_reader_genre (beta_reader_id,genre_id) value (7, 2);
 insert into beta_reader_genre (beta_reader_id,genre_id) value (7, 3);
+insert into beta_reader_genre (beta_reader_id,genre_id) value (7, 4);
+insert into beta_reader_genre (beta_reader_id,genre_id) value (7, 5);
+insert into beta_reader_genre (beta_reader_id,genre_id) value (7, 6);
+insert into beta_reader_genre (beta_reader_id,genre_id) value (7, 7);
+
+insert into beta_reader_genre (beta_reader_id,genre_id) value (8, 1);
+insert into beta_reader_genre (beta_reader_id,genre_id) value (8, 2);
 insert into beta_reader_genre (beta_reader_id,genre_id) value (8, 3);
+insert into beta_reader_genre (beta_reader_id,genre_id) value (8, 4);
+insert into beta_reader_genre (beta_reader_id,genre_id) value (8, 5);
+insert into beta_reader_genre (beta_reader_id,genre_id) value (8, 6);
+insert into beta_reader_genre (beta_reader_id,genre_id) value (8, 7);
 
 insert into user_roles (user_id, role_id) values (7,1);
 insert into user_roles (user_id, role_id) values (8,1);
@@ -127,3 +145,22 @@ value ('korona virus.pdf', false, '1234567891234', 100, true, 'uploaded-files/ko
 
 insert into book (file_name, plagiarism, isbn, num_of_pages, open_access, pdf, price, publishers_address, synopsis, title, year, editor_id, genre_id, lecturer_id, publisher_id, writer_id)
 value ('Loš dizajn korisničkog interfejsa koštao banku 500 miliona.pdf', false, '1234567333333', 150, false, 'uploaded-files/Loš dizajn korisničkog interfejsa koštao banku 500 miliona.pdf',17.50, 'Bulevar Mihajla Pupina 23', 'Korisnički interfejs ','Loš dizajn korisničkog interfejsa koštao banku 500 miliona $','2015',5,1,9,2,6);
+
+-- sifra: reader123, username: reader4
+insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled, beta_reader, penalty_points, lat, lon)
+value ('Reader', 'reader4@gmail.com', '$2a$10$MgS2lefNxeyaDHxP/inYO.D0G5bkS8OX5RbAj7MJgghT16n6dQwIe', 'reader4', 'Sonja', 'Soic', 'London', 'UK', true, true, true, 2, 51.509865, -0.118092);
+
+-- sifra: reader123, username: reader5
+insert into user (type, email, password, username, first_name, last_name, city, country, verified, enabled, beta_reader, penalty_points, lat, lon)
+value ('Reader', 'reader5@gmail.com', '$2a$10$MgS2lefNxeyaDHxP/inYO.D0G5bkS8OX5RbAj7MJgghT16n6dQwIe', 'reader5', 'Goran', 'Soic', 'London', 'UK', true, true, true, 0, 51.509865, -0.118092);
+
+insert into beta_reader_genre (beta_reader_id,genre_id) value (17, 1);
+insert into beta_reader_genre (beta_reader_id,genre_id) value (17, 2);
+insert into beta_reader_genre (beta_reader_id,genre_id) value (17, 3);
+insert into beta_reader_genre (beta_reader_id,genre_id) value (17, 4);
+insert into beta_reader_genre (beta_reader_id,genre_id) value (18, 5);
+insert into beta_reader_genre (beta_reader_id,genre_id) value (18, 6);
+insert into beta_reader_genre (beta_reader_id,genre_id) value (18, 7);
+
+insert into user_roles (user_id, role_id) values (17,1);
+insert into user_roles (user_id, role_id) values (18,1);

@@ -27,9 +27,11 @@ public class BetaReaderES {
     @Field(type = FieldType.Long, store = true)
     private Long betaReaderId;
 
-    //@Field(type = FieldType.Text, store = true, analyzer = ANALYZER_NAME)
     @Field(type = FieldType.Text, store = true)
     private String name;
+
+    @Field(type = FieldType.Text, store = true)
+    private String lastName;
 
     @Field(type = FieldType.Text, store = true, analyzer = ANALYZER_NAME)
     private List<String> genres;
@@ -41,7 +43,8 @@ public class BetaReaderES {
     {
         System.out.println("Pravi beta reader ES");
         this.betaReaderId = reader.getId();
-        this.name = reader.getFirstName() + " " + reader.getLastName();
+        this.name = reader.getFirstName();
+        this.lastName = reader.getLastName();
         this.genres = new ArrayList<>();
         for(Genre g : reader.getBetaGenres())
         {

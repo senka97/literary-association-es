@@ -91,6 +91,14 @@ const Header = () => {
     history.push("/purchasedBooks");
   };
 
+  const goToUploadFileAndCheckPlagiarism = () => {
+    history.push("/book-plagiarism");
+  };
+
+  const goToSearchBetaReaders = () => {
+    history.push("/search-beta-readers");
+  };
+
   const startBookPublishing = async () => {
     console.log("Publishing started...");
     try {
@@ -129,9 +137,9 @@ const Header = () => {
       <Navbar bg="dark" variant="dark">
         <Navbar.Brand href="#home">Literary Association</Navbar.Brand>
         <Nav className="mr-auto" style={{ width: "100%" }}>
-          <Button className="ml-2" variant="link" onClick={goToHomePage}>
+          {/*<Button className="ml-2" variant="link" onClick={goToHomePage}>
             Home
-          </Button>
+  </Button>*/}
           {!loggedIn && (
             <Button
               className="ml-2"
@@ -150,6 +158,11 @@ const Header = () => {
               Writer registration
             </Button>
           )}
+          {loggedIn && (
+            <Button className="ml-2" variant="link" onClick={goToAllTasks}>
+              My tasks
+            </Button>
+          )}
           {loggedIn && role === "ROLE_ADMIN" && (
             <Button
               className="ml-2"
@@ -160,22 +173,36 @@ const Header = () => {
             </Button>
           )}
           {loggedIn && role === "ROLE_WRITER" && (
-            <div>
-              <Button
-                className="ml-2"
-                variant="link"
-                onClick={startBookPublishing}
-              >
-                Publish a book
-              </Button>
-              <Button
-                className="ml-2"
-                variant="link"
-                onClick={reportPlagiarism}
-              >
-                Report plagiarism
-              </Button>
-            </div>
+            <Button
+              className="ml-2"
+              variant="link"
+              onClick={startBookPublishing}
+            >
+              Publish a book
+            </Button>
+          )}
+          {loggedIn && role === "ROLE_WRITER" && (
+            <Button className="ml-2" variant="link" onClick={reportPlagiarism}>
+              Report plagiarism
+            </Button>
+          )}
+          {loggedIn && role === "ROLE_WRITER" && (
+            <Button
+              className="ml-2"
+              variant="link"
+              onClick={goToUploadFileAndCheckPlagiarism}
+            >
+              Upload File
+            </Button>
+          )}
+          {loggedIn && role === "ROLE_WRITER" && (
+            <Button
+              className="ml-2"
+              variant="link"
+              onClick={goToSearchBetaReaders}
+            >
+              Search BR
+            </Button>
           )}
           <Button className="ml-2" variant="link" onClick={goToSearchBooks}>
             Search books
@@ -202,11 +229,7 @@ const Header = () => {
               Purchased books
             </Button>
           )}
-          {loggedIn && (
-            <Button className="ml-2" variant="link" onClick={goToAllTasks}>
-              My tasks
-            </Button>
-          )}
+
           {loggedIn && role === "ROLE_READER" && (
             <Button className="ml-2" variant="link" onClick={goToSubscriptions}>
               My Subscriptions
@@ -214,7 +237,7 @@ const Header = () => {
           )}
         </Nav>
 
-        <Nav className="justify-content-end" style={{ width: "50%" }}>
+        <Nav className="justify-content-end" style={{ width: "30%" }}>
           {loggedIn && role === "ROLE_READER" && (
             <Button className="ml-2" variant="link" onClick={goToSubscription}>
               Subscribe
