@@ -2,6 +2,7 @@ package team16.literaryassociation.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import team16.literaryassociation.dto.GeoLocationDTO;
 import team16.literaryassociation.model.User;
 import team16.literaryassociation.repository.UserRepository;
 import team16.literaryassociation.services.interfaces.UserService;
@@ -36,5 +37,39 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByEmail(String email) {
         return this.userRepository.findByEmail(email);
+    }
+
+    @Override
+    public User findById(Long id){
+        return userRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public GeoLocationDTO returnGeoLocation(String city) {
+        GeoLocationDTO geoLocationDTO = new GeoLocationDTO();
+
+        switch (city){
+            case "Novi Sad":
+                geoLocationDTO.setLat((float) 45.267136);
+                geoLocationDTO.setLon((float) 19.833549);
+                break;
+            case "Beograd":
+                geoLocationDTO.setLat((float) 44.787197);
+                geoLocationDTO.setLon((float) 20.457273);
+                break;
+            case "Berlin":
+                geoLocationDTO.setLat((float) 52.521992);
+                geoLocationDTO.setLon((float) 13.413244);
+                break;
+            case "London":
+                geoLocationDTO.setLat((float) 51.509865);
+                geoLocationDTO.setLon((float) -0.118092);
+
+            default: //Novi Sad
+                geoLocationDTO.setLat((float) 45.267136);
+                geoLocationDTO.setLon((float) 19.833549);
+        }
+
+        return geoLocationDTO;
     }
 }

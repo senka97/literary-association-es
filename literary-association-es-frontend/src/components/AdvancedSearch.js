@@ -22,7 +22,7 @@ const AdvancedSearch = () => {
     value: 1,
     label: "1",
   });
-  const downloadUrl = "https://localhost:8080/api/task/downloadFile?filePath=";
+  const downloadUrl = "https://localhost:9000/api/task/downloadFile?filePath=";
 
   const addToCart = async (book, bookAmount) => {
     let currentUserId = localStorage.getItem("currentUserId");

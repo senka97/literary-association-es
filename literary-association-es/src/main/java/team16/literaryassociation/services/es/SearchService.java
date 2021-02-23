@@ -6,11 +6,23 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import team16.literaryassociation.dto.AdvancedSearchDTO;
-import team16.literaryassociation.dto.SearchResultDTO;
-import team16.literaryassociation.dto.SimpleSearchDTO;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
+import team16.literaryassociation.dto.*;
+import team16.literaryassociation.model.Book;
+import team16.literaryassociation.model.Writer;
+import team16.literaryassociation.services.interfaces.BookService;
+import team16.literaryassociation.services.interfaces.UserService;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -19,6 +31,15 @@ public class SearchService {
 
     @Autowired
     private ResultRetriever resultRetriever;
+
+    @Autowired
+    private BookService bookService;
+
+    @Autowired
+    private RestTemplate restTemplate;
+
+    @Autowired
+    private UserService userService;
 
     public List<SearchResultDTO> simpleSearch(SimpleSearchDTO searchDTO) throws ParseException {
         System.out.println("USAO U SIMPLE SEARCH SERVIS");
@@ -107,6 +128,23 @@ public class SearchService {
         return results;
     }
 
+    public List<BetaReaderDTO> geoLocationSearch(Long id, String genre)
+    {
+
+        Writer writer = (Writer) userService.findById(id);
+
+        BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
+        boolQuery.must(QueryBuilders.matchQuery("genres", genre));
+        boolQuery.mustNot(QueryBuilders.geoDistanceQuery("location").distance("100km").point(writer.getLat(),writer.getLon()));
+
+        System.out.println("Napravio query");
+        System.out.println(boolQuery);
+
+        List<BetaReaderDTO> betaReadersDTO = resultRetriever.getResultsBetaReaders(boolQuery);
+        System.out.println("Pronasao beta readera:" + betaReadersDTO.size());
+        return betaReadersDTO;
+    }
+
     private String validateQuery(String field, String value) throws IllegalArgumentException
     {
         String errorMessage = "";
@@ -118,5 +156,71 @@ public class SearchService {
             errorMessage += "Value not specified";
         }
         return errorMessage;
+    }
+
+    public String checkForPlagiarism(MultipartFile file)
+    {
+        HttpEntity<LoginPlagiatorDTO> requestLogin = new HttpEntity<>(new LoginPlagiatorDTO("soicsenka@gmail.com", "password"));
+        HttpEntity<String> responseLogin = null;
+
+        try {
+            responseLogin = restTemplate.exchange("http://localhost:8080/api/login",
+                    HttpMethod.POST, requestLogin, String.class);
+            System.out.println("ULOGOVAO SE");
+        } catch (RestClientException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("TOKEN");
+        System.out.println(responseLogin.getBody());
+
+        String token = responseLogin.getBody().replace("\"", "");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer "+ token);
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        MultiValueMap<String, Object> form = new LinkedMultiValueMap<>();
+        form.add("file", new FileSystemResource(convert(file)));
+
+        HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(form, headers);
+        ResponseEntity<PaperResultPlagiatorDTO> response = null;
+
+        try {
+            response = restTemplate.exchange("http://localhost:8080/api/file/upload/new",
+                    HttpMethod.POST, request, PaperResultPlagiatorDTO.class);
+        } catch (RestClientException e) {
+            e.printStackTrace();
+        }
+        System.out.println("ODGOVOR");
+        System.out.println(response.getBody());
+
+        // Izvlacenje knjiga iz odgovora
+        StringBuilder plagiarismFiles= new StringBuilder();
+        for(BookForPlagiatorDTO plagatiorDTO : response.getBody().getSimilarPapers())
+        {
+            Book bookFound =  bookService.findByFileName(plagatiorDTO.getTitle());
+            System.out.println("Pronadjena knjiga");
+            plagiarismFiles.append(bookFound.getPdf()).append("|");
+        }
+        System.out.println("Dobijeni string " + plagiarismFiles);
+
+        return plagiarismFiles.toString();
+    }
+
+    public static File convert(MultipartFile file)
+    {
+        File convFile = new File(file.getOriginalFilename());
+        try {
+            convFile.createNewFile();
+            FileOutputStream fos = new FileOutputStream(convFile);
+            fos.write(file.getBytes());
+            fos.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return convFile;
     }
 }

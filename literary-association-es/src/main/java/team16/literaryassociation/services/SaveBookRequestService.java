@@ -22,8 +22,10 @@ public class SaveBookRequestService implements JavaDelegate {
 
     @Autowired
     private GenreService genreService;
+
     @Autowired
     private BookRequestService bookRequestService;
+
     @Autowired
     private WriterService writerService;
 
@@ -46,6 +48,7 @@ public class SaveBookRequestService implements JavaDelegate {
             execution.setVariable("globalErrorMessage", "Writer can't be found. Saving book request failed.");
             throw new BpmnError("SAVING_BOOK_REQUEST_FAILED");
         }
+        execution.setVariable("writerId", writer.getId());
         br.setWriter(writer);
         try {
             this.bookRequestService.save(br);

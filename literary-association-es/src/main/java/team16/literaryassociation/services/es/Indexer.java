@@ -1,6 +1,8 @@
 package team16.literaryassociation.services.es;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import team16.literaryassociation.handler.PDFHandler;
 import team16.literaryassociation.model.Book;
@@ -12,6 +14,9 @@ import team16.literaryassociation.repository.es.BetaReaderESRepository;
 import team16.literaryassociation.repository.es.BookESRepository;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Service
@@ -91,6 +96,26 @@ public class Indexer {
         return retVal;
     }
 
+    public boolean indexBook(Book book) throws IOException {
+
+        PDFHandler handler = new PDFHandler();
+        Path path = Paths.get(book.getPdf());
+        Resource resource = new UrlResource(path.toUri());
+        File file = resource.getFile();
+
+        String text = handler.getText(file);
+        System.out.println("Izvukao tekst iz fajla");
+        BookES bookES = new BookES(book, text);
+
+        if (addBook(bookES))
+        {
+            System.out.println("indexing done");
+            return  true;
+        }
+        System.out.println("Error when indexing");
+        return false;
+    }
+
     public int indexBetaReaders(List<Reader> readers)
     {
         int retVal = 0;
@@ -104,6 +129,17 @@ public class Indexer {
             }
         }
         return retVal;
+    }
+
+    public void indexBetaReader(Reader reader)
+    {
+        BetaReaderES br = new BetaReaderES(reader);
+        if(addBetaReader(br)){
+            System.out.println("Indexing beta reader done");
+        }
+        else{
+            System.out.println("Error when indexing");
+        }
     }
 
 

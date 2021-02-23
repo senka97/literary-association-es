@@ -93,7 +93,7 @@ const TaskForm = () => {
               } else {
                 //ako je vise fajlova za download napravim listu njihovih naziva
                 let fileNames = f.defaultValue.split("|");
-                //fileNames.pop(); //sklonim poslednji jer je on prazan
+                fileNames.pop(); //sklonim poslednji jer je on prazan
                 downloadFilesTemp[`${f.id}`] = fileNames;
               }
             }

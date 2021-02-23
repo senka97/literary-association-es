@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team16.literaryassociation.dto.FormSubmissionDTO;
 import team16.literaryassociation.model.*;
+import team16.literaryassociation.services.es.Indexer;
 import team16.literaryassociation.services.interfaces.*;
 
 import java.util.HashMap;
@@ -30,6 +31,9 @@ public class SaveBookAndSendToIndexingService implements JavaDelegate {
 
     @Autowired
     private BookService bookService;
+
+    @Autowired
+    private Indexer indexer;
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
@@ -117,13 +121,25 @@ public class SaveBookAndSendToIndexingService implements JavaDelegate {
         book.setPublisher(merchant);
         book.setPublishersAddress("Trg Nikole Pasica 4, Beograd");
 
+        Book savedBook;
         try {
-            bookService.save(book);
+            savedBook = bookService.save(book);
         } catch (Exception e) {
             delegateExecution.setVariable("globalError", true);
             delegateExecution.setVariable("globalErrorMessage", "Saving book failed.");
             throw new BpmnError("BOOK_SAVING_FAILED", "Saving book failed.");
         }
+
+        //SEND TO INDEXING SERVICE
+        if(indexer.indexBook(savedBook))
+        {
+            System.out.println("Indexing done, process finished");
+        }
+        else
+        {
+            System.out.println("Indexing failed");
+        }
+
     }
 
     private Map<String, Object> listFieldsToMap(List<FormSubmissionDTO> formData) {
