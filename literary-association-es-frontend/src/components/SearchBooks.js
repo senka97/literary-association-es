@@ -163,6 +163,7 @@ const SearchBooks = () => {
                 name="phrase"
                 id="phrase"
                 onChange={formik.handleChange}
+                checked={formik.values.phrase}
                 value={formik.values.phrase}
               />
             </div>

@@ -232,6 +232,7 @@ const AdvancedSearch = () => {
                   id={element.id}
                   className="form-control"
                   type="checkbox"
+                  checked={element.phrase}
                   value={element.phrase}
                   name="phrase"
                   onChange={handleChangeCheckbox}
