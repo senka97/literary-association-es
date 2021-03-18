@@ -8,3 +8,5 @@ Korišćene tehnologije:
      * SpringBoot
      * MySql v8.0.18
      * Elasticsearch v7.4.0
+  - Frontend
+    * React
