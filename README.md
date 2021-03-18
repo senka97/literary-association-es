@@ -2,6 +2,8 @@
 
 Predmetni projekat iz predmeta "Upravljanje digitalnim dokumentima"
 
+Veb aplikacija literarnog udruženja koja koristi elasticsearch za indeksiranje i pretragu kolekcije knjiga.
+
 Korišćene tehnologije: 
 
   - Backend
