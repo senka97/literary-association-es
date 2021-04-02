@@ -2,6 +2,8 @@
 
 Predmetni projekat iz predmeta "Upravljanje digitalnim dokumentima"
 
+Nadogradnja na projekat https://github.com/senka97/literary-association
+
 Veb aplikacija literarnog udruženja koja koristi elasticsearch za indeksiranje i pretragu kolekcije knjiga.
 
 Korišćene tehnologije: 
